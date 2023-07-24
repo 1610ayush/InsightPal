@@ -1,6 +1,9 @@
+import dotenv from "dotenv"
+dotenv.config()
 import mongoose from "mongoose";
 
-const connectionUrl = 'mongodb://localhost:27017/slack-feedbacks';
+const connectionUrl = `mongodb+srv://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@slack-cluster.tjdy7ru.mongodb.net/?retryWrites=true&w=majority`;
+console.log(connectionUrl)
 
 async function connectToMongoDB() {
   try {

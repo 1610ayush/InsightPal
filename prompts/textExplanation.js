@@ -1,6 +1,8 @@
+import dotenv from "dotenv"
+dotenv.config()
 export const explanationQuery = async(data) => {
     const response = await fetch(
-        "http://ec2-3-91-152-186.compute-1.amazonaws.com:3000/api/v1/prediction/a91453f1-c678-4369-b5c8-08050a305690",
+        process.env.TEXT_EXPLANATION_URL,
         {
             method: "POST",
             headers: {

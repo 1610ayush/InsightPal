@@ -1,6 +1,8 @@
+import dotenv from "dotenv"
+dotenv.config()
 export const keywordQuery = async(data) => {
     const response = await fetch(
-        "http://ec2-3-91-152-186.compute-1.amazonaws.com:3000/api/v1/prediction/37810bc8-9d68-4828-bcd2-0ca12db4ad00",
+        process.env.KEYWORD_GENERATION_URL,
         {
             method: "POST",
             headers: {
