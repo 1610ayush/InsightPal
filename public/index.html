@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slack Feedback App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Join Our Slack Channel</h1>
+  <p>Click the button below to join our Slack channel:</p>
+  <a href="https://join.slack.com/t/product-1zg9100/shared_invite/zt-1zbdnnzna-wnpbt_1WI~Jx0tKODvDZnw" target="_blank">
+    <button>Join Slack</button>
+  </a>
+
+  <h2>Stored Feedback</h2>
+  <div id="feedback-container">
+    <!-- Feedback data fetched from the database will be displayed here -->
+  </div>
+
+  <script>
+    // JavaScript code for fetching data and displaying it in the feedback-container element
+    async function fetchFeedbackData() {
+      try {
+        const response = await fetch('/feedbacks'); // Replace with your backend API endpoint to fetch feedback data
+        const data = await response.json();
+        console.log(data)
+
+        const feedbackContainer = document.getElementById('feedback-container');
+
+        // Loop through the feedback data and display it on the page
+        data.forEach((feedback) => {
+          const feedbackItem = document.createElement('div');
+          feedbackItem.classList.add('feedback-card');
+          feedbackItem.innerHTML = `
+            <h3>${feedback.sentiment}</h3>
+            <div class="feedback-text">
+              <p class="feedback-label">Feedback Text:</p>
+              <p>${feedback.feedbackText}</p>
+            </div>
+            <div class="keywords">
+              <p class="feedback-label">Keywords:</p>
+              <p>${feedback.keywords.join(', ')}</p>
+            </div>
+            <div class="summary">
+              <p class="feedback-label">Summary:</p>
+              <p>${feedback.summary}</p>
+            </div>
+            <div class="explanation">
+              <p class="feedback-label">Explanation:</p>
+              <p>${feedback.explanation}</p>
+            </div>
+            <div class="tags">
+              <p class="feedback-label">Tags:</p>
+              <p>${feedback.tags.join(', ')}</p>
+            </div>
+            <hr>
+          `;
+          feedbackContainer.appendChild(feedbackItem);
+        });
+      } catch (error) {
+        console.error('Error fetching feedback data:', error);
+      }
+    }
+
+    // Call the function to fetch and display feedback data when the page loads
+    window.onload = fetchFeedbackData;
+  </script>
+</body>
+</html>
